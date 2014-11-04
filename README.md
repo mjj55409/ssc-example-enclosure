@@ -1,4 +1,6 @@
 ssc-example-enclosure
 =====================
 
-Example SSC Modeling Project -- Enclosure
+Sample SSC Modeling Project -- Enclosure
+
+This is the **Enclosure** model for the Sample Modeling Project.
