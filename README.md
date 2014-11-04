@@ -1,4 +1,4 @@
-ssc-example-enclosure
+ssc-sample-enclosure
 =====================
 
 Sample SSC Modeling Project -- Enclosure
