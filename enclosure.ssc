@@ -12,13 +12,14 @@ characteristic CONDUIT_CNT
 	name "Number of Conduits"
 	numericLength 3 restrictable
 	values
-		4, 8, 16
+		0, 4, 8, 16
 }
 
 class ENCLOSURE extends PRODUCT 
 {
 	characteristics
-		ADD_DEVICE		defaultValues('N')	
+		 CONDUIT_CNT  defaultValues(0)
+		,ADD_DEVICE   defaultValues('N')	
 }
 class DEVICE extends PRODUCT
 {	
