@@ -1,0 +1,80 @@
+
+characteristic ADD_DEVICE
+{
+	textLength 1 restrictable
+	values
+		"Y"	name "Yes",
+		"N"	name "No"
+}
+
+characteristic CONDUIT_CNT
+{
+	name "Number of Conduits"
+	numericLength 3 restrictable
+	values
+		4, 8, 16
+}
+
+class ENCLOSURE extends PRODUCT 
+{
+	characteristics
+		ADD_DEVICE		defaultValues('N')	
+}
+class DEVICE extends PRODUCT
+{	
+}
+
+class CONDUIT extends PRODUCT
+{
+}
+
+
+material MT101 { name "Explosion Proof Box" 	classes ENCLOSURE boms ENCLOSURE_BOM }
+material DV201 { name "Push Button, Black" 		classes DEVICE }
+material CN301 { name "Conduit with hole cap"	classes CONDUIT }
+
+knowledgeBase ENCLOSURE_KB
+{
+	logsys "LOCAL"
+	version "1.0"
+	validFrom     2014-01-01
+	status released
+	tasks
+		ENCLOSURE_TSK
+	profiles
+		name "MT101_PRF"	material MT101
+}
+
+task ENCLOSURE_TSK
+{
+	constraintNets
+		ENCLOSURE_CSN
+}
+
+bom ENCLOSURE_BOM
+{
+	10 class DEVICE		min 0 max 999,
+	20 class CONDUIT	min 0 max 999
+}
+
+constraintNet ENCLOSURE_CSN
+{
+	constraints
+		CREATE_DEVICE_CS
+}
+
+constraint CREATE_DEVICE_CS
+{
+	objects
+		?box is_object(material)(300)(nr=MT101)
+	condition
+		?box.ADD_DEVICE = 'Y'
+	restrictions
+		has_part
+		(	?box,
+			pos_type=(300)DEVICE
+			,with
+//				IS_PART_OF_SD_SOFT = ?box;
+				RFC_MATNR = 'DV201'
+		)
+}
